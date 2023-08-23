@@ -1,0 +1,237 @@
+use("db_campus_incidencias");
+db.createCollection("counters");
+db.counters.insertMany([
+    { _id: "usuario_reporteId", sequence_value: 0 },
+    { _id: "salonId", sequence_value: 0 },
+    { _id: "trainerId", sequence_value: 0 },
+    { _id: "rolesId", sequence_value: 0 }
+]);
+/**
+ * ! roles
+ */
+use("db_campus_incidencias");
+db.createCollection("roles", {
+    capped: true,
+    size: 5000,
+    max: 50,
+    validator:{
+        $jsonSchema:{
+            bsonType: "object",
+            additionalProperties: false,
+            required : ['_id', 'email_registro', 'password_registro','rol_name','rol_access'],
+            properties:{
+                _id:{
+                    bsonType: 'int',
+                    description : "El ID_ROL es un parametro obligatorio y debe ser un entero"
+                },
+                usuario_nickname:{  
+                    bsonType: 'string',
+                    description : "El ROL_NICKNAME es un parametro obligatorio y debe ser un string"
+                },
+                email_registro:{  
+                    bsonType: 'string',
+                    description : "El ROL_EMAIL es un parametro obligatorio y debe ser un string"
+                },
+                password_registro:{  
+                    bsonType: 'string',
+                    description : "El ROL_PASSWORD es un parametro obligatorio y debe ser un string"
+                },
+                rol_name:{  
+                    bsonType: 'string',
+                    description : "El NOMBRE_ROL es un parametro obligatorio y debe ser un string"
+                },
+                rol_access:{  
+                    bsonType: 'array',
+                    description : "El ACCESO_ROLES es un parametro obligatorio y debe ser un ARRAY"
+                }
+            }
+        }
+    }
+})
+/**
+ * ! usuario_reporte
+ */
+use("db_campus_incidencias");
+db.createCollection("usuario_reporte", {
+    capped: true,
+    size: 5000,
+    max: 50,
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            title: "usuario resportes",
+            required: [
+                "_id",
+                "usu_incidencia",
+                "fecha",
+                "lugar_incidencia",
+                "descripcion"
+            ],
+            properties: {
+                _id: {
+                    bsonType: 'int',
+                },
+                usu_incidencia: {
+                    bsonType: "object",
+                    required: ["nivel", "categoria"],
+                    properties: {
+                        nivel: {
+                            bsonType: "int",
+                            pattern: "^[1-10]$",
+                            description: "El nivel debe ser un numero entero entre 1 y 10, y es obligatorio",
+                        },
+                        categoria: {
+                            bsonType: "string",
+                            enum: ["leve", "moderada", "critica"],
+                            description: "La categoría debe ser 'leve', 'moderada' o 'critica'",
+                        },
+                    },
+                },
+                fecha: {
+                    bsonType: "date",
+                    description: "el tipo de dato es incorrecto",
+                },
+                lugar_incidencia: {
+                    bsonType: "string",
+                    description: "el tipo de dato es incorrecto",
+                },
+                descripcion: {
+                    bsonType: "string",
+                    description: "el tipo de dato es incorrecto",
+                },
+            },
+        },
+    },
+});
+/**
+ * ! salon
+ */
+use("db_campus_incidencias");
+db.createCollection("salon", {
+    capped: true,
+    size: 5000,
+    max: 50,
+    validator: {
+        $jsonSchema: {
+        bsonType: "object",
+        title: "salones",
+        additionalProperties: false,
+        required: ["_id", "salon_area", "salon_nombre", "ordenadores"],
+            properties: {
+                _id:{
+                    bsonType: 'int',
+                },
+                salon_area: {
+                    bsonType: "string",
+                    description: "el tipo de dato es incorrecto",
+                    enum: ["review1", "training", "review2"]
+                },
+                salon_nombre: {
+                    bsonType: "string",
+                    description: "el tipo de dato es incorrecto",
+                    enum: {
+                        "training": ["apolo", "artemis", "sputnik", "skylab"],
+                        "review1": ["corvus"],
+                        "review2": ["endor"]
+                    }
+                },
+                ordenadores: {
+                bsonType: "array",
+                    items: {
+                        bsonType: "object",
+                        required: [
+                        "ordenador_codigo",
+                        "ordenador_codigo_teclado",
+                        "ordenador_codigo_mouse",
+                        "ordenador_codigo_diadema"
+                        ],
+                        description: "datos requeridos",
+                        properties: {
+                            ordenador_codigo: {
+                                bsonType: "string",
+                                description: "el tipo de dato es incorrecto",
+                            },
+                            ordenador_codigo_teclado: {
+                                bsonType: "string",
+                                description: "el tipo de dato es incorrecto",
+                            },
+                            ordenador_codigo_mouse: {
+                                bsonType: "string",
+                                description: "el tipo de dato es incorrecto",
+                            },
+                            ordenador_codigo_diadema: {
+                                bsonType: "string",
+                                description: "el tipo de dato es incorrecto",
+                            }
+                        },
+                    },
+                },
+            },
+        },
+    },
+});
+/**
+ * ! trainer
+ */
+use("db_campus_incidencias");
+db.createCollection("trainer", {
+    capped: true,
+    size: 5000,
+    max: 50,
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            additionalProperties: false,
+            required: [
+            "_id",
+            "nombre_completo",
+            "email_personal",
+            "email_corporativo",
+            "telefono_movil",
+            "telefono_residencia",
+            "telefono_empresa",
+            "telefono_movil_empresarial"
+            ],
+            properties: {
+                _id:{
+                    bsonType: 'int',
+                },
+                nombre_completo: {
+                    bsonType: "string",
+                    description: "el tipo de dato es incorrecto",
+                },
+                email_personal: {
+                    bsonType: "string",
+                    description: 'El email personal es obligatorio y debe ser válido',
+                    pattern: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+                },
+                email_corporativo: {
+                    bsonType: "string",
+                    description: 'El email corporativo es obligatorio y debe ser válido',
+                    pattern: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+                },
+                telefono_movil: {
+                    bsonType: "string",
+                    description: "El teléfono movil es obligatorio y debe cumplir con ciertas restricciones",
+                    pattern: "[+\\-0-9\\s]+$"
+                },
+                telefono_residencia: {
+                    bsonType: "string",
+                    description: "El teléfono de residencia es obligatorio y debe cumplir con ciertas restricciones",
+                    pattern: "[+\\-0-9\\s]+$"
+                },
+                telefono_empresa: {
+                    bsonType: "string",
+                    description: "El teléfono de empresa es obligatorio y debe cumplir con ciertas restricciones",
+                    pattern: "[+\\-0-9\\s]+$"
+                },
+                telefono_movil_empresarial: {
+                    bsonType: "string",
+                    description: "El teléfono movil empresarial es obligatorio y debe cumplir con ciertas restricciones",
+                    pattern: "[+\\-0-9\\s]+$"
+                }
+            },
+        },
+    },
+});

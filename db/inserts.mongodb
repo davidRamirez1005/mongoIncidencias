@@ -1,0 +1,200 @@
+function siguienteId(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+/**
+ * ! roles
+ */
+use("db_campus_incidencias");
+db.roles.insertMany([
+    {
+        _id: siguienteId("roles"),
+        usuario_nickname: "usuario",
+        email_registro: "usuario@example.com",
+        password_registro: "usuario23",
+        rol_name: "Usario reporte",
+        rol_access: ["salon"]
+    },
+    {
+        _id: siguienteId("roles"),
+        usuario_nickname: "admin",
+        email_registro: "admin@example.com",
+        password_registro: "admin23",
+        rol_name: "Administrador",
+        rol_access: ["salon", "usuario_reporte", "trainer"]
+    }
+]);
+/**
+ * ! salones
+ */
+use("db_campus_incidencias");
+db.salon.insertMany([
+    {
+    _id: Number(siguienteId("salon")),
+    salon_area: "training",
+    salon_nombre: "apolo",
+    ordenadores: [
+            {
+            ordenador_codigo: "PC1",
+            ordenador_codigo_teclado: "TEC1",
+            ordenador_codigo_mouse: "MOU1",
+            ordenador_codigo_diadema: "DIA1"
+            }
+        ]
+    },
+    {
+    _id: Number(siguienteId("salon")),
+    salon_area: "training",
+    salon_nombre: "artemis",
+    ordenadores: [
+            {
+            ordenador_codigo: "PC2",
+            ordenador_codigo_teclado: "TEC2",
+            ordenador_codigo_mouse: "MOU2",
+            ordenador_codigo_diadema: "DIA2"
+            }
+        ]
+    },
+    {
+    _id: Number(siguienteId("salon")),
+    salon_area: "review1",
+    salon_nombre: "corvus",
+    ordenadores: [
+            {
+            ordenador_codigo: "PC3",
+            ordenador_codigo_teclado: "TEC3",
+            ordenador_codigo_mouse: "MOU3",
+            ordenador_codigo_diadema: "DIA3"
+            }
+        ]
+    },
+    {
+    _id: Number(siguienteId("salon")),
+    salon_area: "review2",
+    salon_nombre: "endor",
+    ordenadores: [
+            {
+            ordenador_codigo: "PC4",
+            ordenador_codigo_teclado: "TEC4",
+            ordenador_codigo_mouse: "MOU4",
+            ordenador_codigo_diadema: "DIA4"
+            }
+        ]
+    }
+]);
+/**
+ * ! trainer
+ */
+use("db_campus_incidencias");
+db.trainer.insertMany([
+    {
+        _id: Number(siguienteId("trainer")),
+        nombre_completo: "Juan Pérez",
+        email_personal: "juan.perez@example.com",
+        email_corporativo: "juan.perez@empresa.com",
+        telefono_movil: "+1234567890",
+        telefono_residencia: "+9876543210",
+        telefono_empresa: "+555555555",
+        telefono_movil_empresarial: "+111111111",
+    },
+    {
+        _id: Number(siguienteId("trainer")),
+        nombre_completo: "María García",
+        email_personal: "maria.garcia@example.com",
+        email_corporativo: "maria.garcia@empresa.com",
+        telefono_movil: "+1111111111",
+        telefono_residencia: "+2222222222",
+        telefono_empresa: "+3333333333",
+        telefono_movil_empresarial: "+4444444444",
+    },
+    {
+        _id: Number(siguienteId("trainer")),
+        nombre_completo: "Ana López",
+        email_personal: "ana.lopez@example.com",
+        email_corporativo: "ana.lopez@empresa.com",
+        telefono_movil: "+7777777777",
+        telefono_residencia: "+8888888888",
+        telefono_empresa: "+9999999999",
+        telefono_movil_empresarial: "+0000000000",
+    },
+    {
+        _id: Number(siguienteId("trainer")),
+        nombre_completo: "Carlos Martínez",
+        email_personal: "carlos.martinez@example.com",
+        email_corporativo: "carlos.martinez@empresa.com",
+        telefono_movil: "+5555555555",
+        telefono_residencia: "+4444444444",
+        telefono_empresa: "+3333333333",
+        telefono_movil_empresarial: "+2222222222",
+    },
+    {
+        _id: Number(siguienteId("trainer")),
+        nombre_completo: "Laura Rodríguez",
+        email_personal: "laura.rodriguez@example.com",
+        email_corporativo: "laura.rodriguez@empresa.com",
+        telefono_movil: "+999999999",
+        telefono_residencia: "+888888888",
+        telefono_empresa: "+777777777",
+        telefono_movil_empresarial: "+666666666",
+    }
+]);
+/**
+ * ! usuario_reporte
+ */
+use("db_campus_incidencias");
+db.usuario_reporte.insertMany([
+    {
+        _id: Number(siguienteId("usuario_reporte")),
+        usu_incidencia: {
+            nivel: 2,
+            categoria: "leve"
+        },
+        fecha: ISODate("2023-08-20"),
+        lugar_incidencia: "Oficina A",
+        descripcion: "Reporte de incidente menor en la oficina."
+    },
+    {
+        _id: Number(siguienteId("usuario_reporte")),
+        usu_incidencia: {
+            nivel: 5,
+            categoria: "moderada"
+        },
+        fecha: ISODate("2023-08-21"),
+        lugar_incidencia: "Oficina B",
+        descripcion: "Reporte de problema con el equipo de red."
+    },
+    {
+        _id: Number(siguienteId("usuario_reporte")),
+        usu_incidencia: {
+            nivel: 2,
+            categoria: "leve"
+        },
+        fecha: ISODate("2023-08-22"),
+        lugar_incidencia: "Oficina A",
+        descripcion: "Reporte de problema con la impresora."
+    },
+    {
+        _id: Number(siguienteId("usuario_reporte")),
+        usu_incidencia: {
+            nivel: 9,
+            categoria: "critica"
+        },
+        fecha: ISODate("2023-08-23"),
+        lugar_incidencia: "Oficina C",
+        descripcion: "Reporte de fallo del servidor principal."
+    },
+    {
+        _id: Number(siguienteId("usuario_reporte")),
+        usu_incidencia: {
+            nivel: 6,
+            categoria: "moderada"
+        },
+        fecha: ISODate("2023-08-24"),
+        lugar_incidencia: "Oficina B",
+        descripcion: "Reporte de lentitud en las computadoras."
+    }
+]);
