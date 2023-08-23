@@ -17,7 +17,7 @@ db.roles.insertMany([
         email_registro: "usuario@example.com",
         password_registro: "usuario23",
         rol_name: "Usario reporte",
-        rol_access: ["salon"]
+        rol_access: ["salon","usuario_reporte"]
     },
     {
         _id: siguienteId("roles"),
