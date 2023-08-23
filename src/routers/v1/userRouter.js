@@ -1,18 +1,16 @@
 import {con} from '../../config/atlas.js'
 // import siguienteId from '../helpers/siguienteId.js';
 
+
 /**
- * * obtener los reportes de incidencias
+ * * listar los salones
  */
-export const adminV1 = async(req, res) =>{
+export const userV1 = async(req, res) =>{
     if(!req.rateLimit) return;
 
     let db = await con();
-    let coleccion = db.collection('usuario_reporte');
+    let coleccion = db.collection('salon');
     let result = await coleccion.find().project({_id : 0}).toArray();
     res.send(result)
 }
 
-/**
- * * asignar nuevo trainer
- */
