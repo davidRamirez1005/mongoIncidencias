@@ -3,8 +3,10 @@ import dotenv from 'dotenv';
 import {servidor} from './config/connect.js';
 import {limitget} from './helpers/ValidationLimit.js'
 import passport from './helpers/passportHelper.js';
-import { appLogin } from './routers/login.js';
-import {appUser} from './routers/user.js'
+// import { appLogin } from './routers/login.js';
+import { generateToken } from './Auth/jwt/token.js';
+import appUser from './routers/userRouter.js'
+import appIncidencias from './routers/incidenciaRouter.js';
 
 dotenv.config();
 const appExpress = express();
@@ -13,8 +15,10 @@ appExpress.use(express.json());
 appExpress.use(limitget())
 
 //enpoints
-appExpress.use('/login', appLogin)
-appExpress.use("/c", passport.authenticate('bearer', { session: false }), appUser);
+appExpress.use('/login', generateToken)
+
+appExpress.use("/administrador", passport.authenticate('bearer', { session: false }), appIncidencias);
+appExpress.use("/usuario", passport.authenticate('bearer', { session: false }), appUser);
 
 
 

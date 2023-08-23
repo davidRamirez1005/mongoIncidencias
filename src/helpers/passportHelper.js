@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as  BearerStrategy} from "passport-http-bearer";
-import { validateToken } from "../Auth/jwt/validarToken.js";
+import { validateToken } from "../Auth/jwt/token.js";
 
 passport.use(new BearerStrategy(
         async function(token, done) {

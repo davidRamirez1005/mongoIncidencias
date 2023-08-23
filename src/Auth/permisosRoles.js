@@ -7,6 +7,7 @@ const validarPermisos = (req, res, next) => {
     }else {
         res.status(401).send({ status: 406, message: "Este Usuario no tiene permisos sobre este recurso"})
     }
-}    
-
-export default validarPermisos
+  }    
+  
+  export default validarPermisos
+  
