@@ -99,7 +99,7 @@ db.trainer.insertMany([
         telefono_movil: "+1234567890",
         telefono_residencia: "+9876543210",
         telefono_empresa: "+555555555",
-        telefono_movil_empresarial: "+111111111",
+        telefono_movil_empresarial: "+111111111"
     },
     {
         _id: Number(siguienteId("trainer")),

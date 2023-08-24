@@ -130,11 +130,7 @@ db.createCollection("salon", {
                 salon_nombre: {
                     bsonType: "string",
                     description: "el tipo de dato es incorrecto",
-                    enum: {
-                        "training": ["apolo", "artemis", "sputnik", "skylab"],
-                        "review1": ["corvus"],
-                        "review2": ["endor"]
-                    }
+                    enum: ["apolo", "artemis", "sputnik", "skylab", "corvus", "endor"]
                 },
                 ordenadores: {
                 bsonType: "array",
