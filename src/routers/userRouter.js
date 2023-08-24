@@ -5,7 +5,7 @@ import passport from '../helpers/passportHelper.js'
 import validarPermisos from '../Auth/permisosRoles.js'
 import {userV1} from './v1/userRouter.js'
 import { userV2, userV2_1, userV2_2 } from './v2/userRouter.js'
-import {userV3} from './v3/userRouter.js'
+import {newIncidenciaV3} from './v3/userRouter.js'
 
 const appUser = Routes();
 const version = routesVersioning();
@@ -28,7 +28,7 @@ appUser.get('/salon/listar', version({
  * * http://127.0.0.3:5012/usuario/usuario_reporte/agregar
  */
 appUser.post('/usuario_reporte/agregar', version({
-    "3.1.0": userV3
+    "3.1.0": newIncidenciaV3
 }));
 
 export default appUser;

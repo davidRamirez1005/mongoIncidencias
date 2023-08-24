@@ -2,16 +2,28 @@ import {con} from '../../config/atlas.js'
 import siguienteId from '../../helpers/siguienteId.js';
 
 /**
- * * agregar una nueva incidencia
+ * * obtener los reportes de incidencias
  */
-export const newIncidenciaV3 = async(req, res) =>{
+export const adminV1 = async(req, res) =>{
+    if(!req.rateLimit) return;
+
+    let db = await con();
+    let coleccion = db.collection('usuario_reporte');
+    let result = await coleccion.find().project({_id : 0}).toArray();
+    res.send(result)
+}
+
+/**
+ * * asignar nuevo trainer
+ */
+export const newTrainerV1 = async(req, res) =>{
     if (!req.rateLimit) return;
 
     try {
-        const newId = await siguienteId( "usuario_reporte");
+        const newId = await siguienteId( "trainer");
 
         let db = await con();
-        let coleccion = db.collection('usuario_reporte');
+        let coleccion = db.collection('trainer');
         
         const newDocument = {
             _id: newId,
