@@ -15,7 +15,8 @@ export const newIncidenciaV3 = async(req, res) =>{
         
         const newDocument = {
             _id: newId,
-            ...req.body
+            ...req.body,
+            fecha : new Date
         };
         let result = await coleccion.insertOne(newDocument);
         // console.log(result);
