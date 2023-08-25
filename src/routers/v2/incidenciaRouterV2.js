@@ -1,12 +1,24 @@
 import {con} from '../../config/atlas.js'
 // import siguienteId from '../../helpers/siguienteId.js';
+import { validationResult } from 'express-validator';
+import {validationPc} from '../../validator/validaciones.js'
 /**
  *  * agregar un pc
  */
 let area = "training"
 let salonName = "apolo"
 export const insertarOrdenadorEnSalonV2 = async (req, res) => {
+    if (!req.rateLimit) return;
+
     try {
+
+        await Promise.all(validationPc.map(rule => rule.run(req)));
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
         let db = await con();
         let coleccion = db.collection('salon');
         // Buscar el salón específico

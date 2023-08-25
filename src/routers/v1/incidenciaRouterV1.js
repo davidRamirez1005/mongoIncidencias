@@ -1,5 +1,7 @@
 import {con} from '../../config/atlas.js'
 import siguienteId from '../../helpers/siguienteId.js';
+import { validationResult } from 'express-validator';
+import {validationIncidencia} from '../../validator/validaciones.js'
 
 /**
  * * obtener los reportes de incidencias
@@ -21,6 +23,13 @@ export const newTrainerV1 = async(req, res) =>{
 
     try {
         const newId = await siguienteId( "trainer");
+
+        await Promise.all(validationIncidencia.map(rule => rule.run(req)));
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
 
         let db = await con();
         let coleccion = db.collection('trainer');
