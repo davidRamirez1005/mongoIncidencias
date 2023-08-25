@@ -32,13 +32,13 @@ debe pasar como body el email y contraseña que del rol que desea consultar:
 ```json
 {
     "ROL_EMAIL": "usuario@example.com",
-    "ROL_PASSWORD": "usuario23",
+    "ROL_PASSWORD": "usuario23"
 }
 ```
 
 2. Al generar el token ubiquelo en 'Authorization' ___ bearer 'token generado ( importante colocar bearer antes del token)
 
-#### => Gestión de administrador:
+#### => Gestión de administrador: usar tooken para admin
 
 Usar el endpoint `/administrador
 
@@ -48,7 +48,7 @@ Usar el endpoint `/administrador
 
    ```json
    {
-   	"nombre_completo": "falao",
+   	   "nombre_completo": "falao",
        "email_personal": "falcao.perez@example.com",
        "email_corporativo": "falcao.perez@empresa.com",
        "telefono_movil": "+8965325659",
@@ -73,7 +73,7 @@ Usar el endpoint `/administrador
 
 
 
-#### => Gestión de *usuarios*:
+#### => Gestión de *usuarios*: Usar token para usuarios
 
 Usar el endpoint `/usuario`
 
